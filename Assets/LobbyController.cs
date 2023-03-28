@@ -6,7 +6,6 @@ using Steamworks;
 using UnityEngine.UI;
 using System.Linq;
 
-
 public class LobbyController : MonoBehaviour
 {
     public static LobbyController Instance;
@@ -75,7 +74,7 @@ public class LobbyController : MonoBehaviour
     public void FindLocalPlayer()
     {
         LocalPlayerObject = GameObject.Find("LocalGamePlayer");
-        LocalplayerController = LocalPlayerObject.GetComponent<PlayerObjectController>;
+        LocalplayerController = LocalPlayerObject.GetComponent<PlayerObjectController>();
     }
 
     public void CreateHostPlayerItem()
