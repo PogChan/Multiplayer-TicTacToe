@@ -21,7 +21,6 @@ public class SteamLobby : MonoBehaviour
 
     // GameObject
 
-    public GameObject PlayGameButton;
     public GameObject MainGameScreen;
 
     public Text SplashScreenText;
@@ -36,22 +35,10 @@ public class SteamLobby : MonoBehaviour
         LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         Joinrequested = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequested);
         LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-        PlayGameButton.SetActive(true);
-        SplashScreenText.gameObject.SetActive(true);
-        //HostButton.SetActive(false);
-        //LobbyNameText.gameObject.SetActive(false);
-        MainGameScreen.SetActive(false);
     }
 
     public void HostLobby() {
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, manager.maxConnections);
-    }
-
-    public void StartGame() {
-        PlayGameButton.SetActive(false);
-        SplashScreenText.gameObject.SetActive(false);
-        //HostButton.SetActive(true);
-        //LobbyNameText.gameObject.SetActive(true);
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback) {
@@ -63,11 +50,6 @@ public class SteamLobby : MonoBehaviour
         CurrentLobbyID = callback.m_ulSteamIDLobby;
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", SteamFriends.GetPersonaName().ToString() + "'s Lobby");
-        PlayGameButton.SetActive(false);
-        SplashScreenText.gameObject.SetActive(false);
-        //HostButton.SetActive(false);
-        //LobbyNameText.gameObject.SetActive(true);
-        MainGameScreen.SetActive(true);
     }
 
     private void OnJoinRequested(GameLobbyJoinRequested_t callback) {
