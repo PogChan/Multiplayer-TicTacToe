@@ -168,4 +168,10 @@ public class LobbyController : MonoBehaviour
         }
     }
 
+    public void beginGame() {
+        if (LocalplayerController.isHost()) {
+            SceneManager.LoadScene("Game");
+        }
+    }
+
 }

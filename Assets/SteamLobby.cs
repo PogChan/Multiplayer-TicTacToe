@@ -86,11 +86,4 @@ public class SteamLobby : MonoBehaviour
         manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
         manager.StartClient();
     }
-
-    // link to lobby start Game button
-    public void beginGame() {
-        if (LocalplayerController.isHost()) {
-            SceneManager.LoadScene("Game");
-        }
-    }
 }
