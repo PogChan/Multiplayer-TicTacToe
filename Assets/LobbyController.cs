@@ -5,6 +5,7 @@ using Mirror;
 using Steamworks;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class LobbyController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class LobbyController : MonoBehaviour
 
     //UI element
     public Text LobbyNameText;
+    public Text StartGameText;
 
     //Player Data
     public GameObject PlayerListViewContent;
@@ -46,16 +48,12 @@ public class LobbyController : MonoBehaviour
         {
             Instance = this;
         }
-
-
     }
 
     public void UpdateLobbyName()
     {
         CurrentLobbyID = Manager.GetComponent<SteamLobby>().CurrentLobbyID;
         LobbyNameText.text = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), "name");
- 
-
     }
 
     public void UpdatePlayerList()
@@ -158,8 +156,16 @@ public class LobbyController : MonoBehaviour
 
             }
         }
+    }
 
-
+    public void customizeAppearance() {
+        if(LocalplayerController.isHost()) {
+            // add logic for the game to start when we have sufficient playerrs
+            StartGameText.text = "Start Game";
+        }
+        else {
+            StartGameText.text = "Waiting for host to start...";
+        }
     }
 
 }

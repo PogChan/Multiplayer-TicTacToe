@@ -76,6 +76,7 @@ public class SteamLobby : MonoBehaviour
     }
 
     private void OnLobbyEntered(LobbyEnter_t callback) {
+        Debug.Log("Entering lobby: " + callback.m_ulSteamIDLobby);
         // Everyone
 
         // CurrentLobbyID = callback.m_ulSteamIDLobby;
@@ -84,5 +85,12 @@ public class SteamLobby : MonoBehaviour
         if (NetworkServer.active) { return; }
         manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
         manager.StartClient();
+    }
+
+    // link to lobby start Game button
+    public void beginGame() {
+        if (LocalplayerController.isHost()) {
+            SceneManager.LoadScene("Game");
+        }
     }
 }

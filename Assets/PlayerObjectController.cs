@@ -38,6 +38,7 @@ public class PlayerObjectController : NetworkBehaviour
 
         LobbyController.Instance.FindLocalPlayer();
         LobbyController.Instance.UpdateLobbyName();
+        LobbyController.Instance.customizeAppearance();
     }
 
     public override void OnStartClient()
@@ -45,6 +46,7 @@ public class PlayerObjectController : NetworkBehaviour
         Manager.GamePlayers.Add(this);
         LobbyController.Instance.UpdateLobbyName();
         LobbyController.Instance.UpdatePlayerList();
+        LobbyController.Instance.customizeAppearance();
     }
 
     public override void OnStopClient()
@@ -70,5 +72,9 @@ public class PlayerObjectController : NetworkBehaviour
             LobbyController.Instance.UpdatePlayerList();
 
         }
+    }
+
+    public bool isHost() {
+        return isServer;
     }
 }
