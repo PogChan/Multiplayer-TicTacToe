@@ -11,8 +11,9 @@ public class PlayerObjectController : NetworkBehaviour
     [SyncVar] public int ConnectionID;
     [SyncVar] public int PlayerIdNumber;
     [SyncVar] public ulong PlayerSteamID;
-
     [SyncVar(hook = nameof(PlayerNameUpdate))] public string PlayerName;
+
+    [SyncVar(hook = nameof(PlayerReadyUpdate))] public bool Ready;
 
     private CustomNetworkManager manager;
 
@@ -29,6 +30,38 @@ public class PlayerObjectController : NetworkBehaviour
         }
     }
 
+    private void Start()
+    {
+        //make sure we dont destory on swtich scene.
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void PlayerReadyUpdate(bool OldValue, bool NewValue)
+    {
+        if (isServer)
+        {
+            this.Ready = NewValue;
+        }
+        if(isClient)
+        {
+            LobbyController.Instance.UpdatePlayerList();
+        }
+    }
+
+    [Command]
+    private void CMDSetPlayerReady()
+    {
+        this.PlayerReadyUpdate(this.Ready, !this.Ready);
+    }
+    
+    public void ChangeReady()
+    {
+        if (isOwned)
+        {
+            CMDSetPlayerReady();
+        }
+    }
+
     public override void OnStartAuthority()
     {
 
@@ -39,6 +72,8 @@ public class PlayerObjectController : NetworkBehaviour
         LobbyController.Instance.FindLocalPlayer();
         LobbyController.Instance.UpdateLobbyName();
     }
+
+
 
     public override void OnStartClient()
     {
@@ -70,5 +105,20 @@ public class PlayerObjectController : NetworkBehaviour
             LobbyController.Instance.UpdatePlayerList();
 
         }
+    }
+
+    //host calls this function and then calls the command to call
+    public void CanStartGame(string SceneName)
+    {
+        if (isOwned)
+        {
+            CMDCanStartGame(SceneName);
+        }
+    }
+
+    [Command]
+    public void CMDCanStartGame(string SceneName)
+    {
+        manager.StartGame(SceneName);
     }
 }
