@@ -225,8 +225,6 @@ public class LobbyController : MonoBehaviour
 
             }
         }
-
-
     }
 
 

@@ -18,6 +18,7 @@ public class SteamLobby : MonoBehaviour
     public ulong CurrentLobbyID;
     private const string HostAddressKey = "HostAddress";
     private CustomNetworkManager manager;
+    private LobbyController lobbyController;
 
     // GameObject
 
@@ -32,6 +33,7 @@ public class SteamLobby : MonoBehaviour
 
 
         manager = GetComponent<CustomNetworkManager>();
+        lobbyController = GetComponent<LobbyController>();
         LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         Joinrequested = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequested);
         LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
@@ -39,6 +41,7 @@ public class SteamLobby : MonoBehaviour
 
     public void HostLobby() {
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, manager.maxConnections);
+        lobbyController.UpdatePlayerList();
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback) {
@@ -50,21 +53,23 @@ public class SteamLobby : MonoBehaviour
         CurrentLobbyID = callback.m_ulSteamIDLobby;
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", SteamFriends.GetPersonaName().ToString() + "'s Lobby");
+        lobbyController.UpdatePlayerList();
     }
 
     private void OnJoinRequested(GameLobbyJoinRequested_t callback) {
         Debug.Log("Request To Join Lobby!!!");
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
+        lobbyController.UpdatePlayerList();
     }
 
     private void OnLobbyEntered(LobbyEnter_t callback) {
         // Everyone
-
         // CurrentLobbyID = callback.m_ulSteamIDLobby;
    
         // Client
         if (NetworkServer.active) { return; }
         manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
         manager.StartClient();
+        lobbyController.UpdatePlayerList();
     }
 }
