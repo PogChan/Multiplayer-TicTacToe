@@ -14,6 +14,7 @@ public class SteamLobby : MonoBehaviour
     protected Callback<LobbyCreated_t> LobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> Joinrequested;
     protected Callback<LobbyEnter_t> LobbyEntered;
+    protected Callback<OnConnectionStatusChanged_t> OnConnectionStatusChanged;
 
     public ulong CurrentLobbyID;
     private const string HostAddressKey = "HostAddress";
@@ -29,12 +30,12 @@ public class SteamLobby : MonoBehaviour
         if (!SteamManager.Initialized) { return; }
         if (Instance == null) { Instance = this; }
 
-
         manager = GetComponent<CustomNetworkManager>();
         lobbyController = GetComponent<LobbyController>();
         LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         Joinrequested = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequested);
         LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+        lobbyController.UpdatePlayerList();
     }
 
     public void HostLobby() {
