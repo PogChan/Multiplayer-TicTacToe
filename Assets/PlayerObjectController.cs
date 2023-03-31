@@ -32,6 +32,7 @@ public class PlayerObjectController : NetworkBehaviour
 
     private void Start()
     {
+        Debug.Log("PlayerObjectControlled.Start() called");
         //make sure we dont destory on swtich scene.
         DontDestroyOnLoad(this.gameObject);
     }
@@ -64,7 +65,7 @@ public class PlayerObjectController : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
-
+        Debug.Log("PlayerObjectControlled.OnStartAuthority() called");
         CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
 
         gameObject.name = "LocalGamePlayer";
@@ -77,6 +78,7 @@ public class PlayerObjectController : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        Debug.Log("PlayerObjectControlled.OnStartClient() called");
         Manager.GamePlayers.Add(this);
         LobbyController.Instance.UpdateLobbyName();
         LobbyController.Instance.UpdatePlayerList();

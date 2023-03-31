@@ -37,6 +37,7 @@ public class PlayerListItem : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("PlayerListItem.Start() called");
         ImageLoaded = Callback<AvatarImageLoaded_t>.Create(OnImageLoaded);
         DontDestroyOnLoad(this.gameObject);
     }
@@ -95,6 +96,4 @@ public class PlayerListItem : MonoBehaviour
             return;
         }
     }
-
-
 }

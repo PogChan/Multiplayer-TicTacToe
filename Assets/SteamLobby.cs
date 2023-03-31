@@ -14,7 +14,7 @@ public class SteamLobby : MonoBehaviour
     protected Callback<LobbyCreated_t> LobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> Joinrequested;
     protected Callback<LobbyEnter_t> LobbyEntered;
-    protected Callback<OnConnectionStatusChanged_t> OnConnectionStatusChanged;
+    // protected Callback<OnConnectionStatusChanged_t> OnConnectionStatusChanged;
 
     public ulong CurrentLobbyID;
     private const string HostAddressKey = "HostAddress";
@@ -26,6 +26,7 @@ public class SteamLobby : MonoBehaviour
     public Text SplashScreenText;
 
     private void Start() {
+        Debug.Log("SteamLobby.Start() called");
 
         if (!SteamManager.Initialized) { return; }
         if (Instance == null) { Instance = this; }
@@ -39,6 +40,7 @@ public class SteamLobby : MonoBehaviour
     }
 
     public void HostLobby() {
+        Debug.Log("SteamLobby.HostLobby() called");
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, manager.maxConnections);
         lobbyController.UpdatePlayerList();
     }
@@ -62,6 +64,7 @@ public class SteamLobby : MonoBehaviour
     }
 
     private void OnLobbyEntered(LobbyEnter_t callback) {
+        Debug.Log("SteamLobby.OnLobbyEntered() called");
         // Everyone
         // CurrentLobbyID = callback.m_ulSteamIDLobby;
    

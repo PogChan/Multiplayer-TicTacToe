@@ -50,15 +50,13 @@ public class LobbyController : MonoBehaviour
         {
             Instance = this;
         }
-
-
+        Debug.Log("LobbyController.Awake() called");
     }
 
 
     public void ReadyPlayer()
     {
         LocalplayerController.ChangeReady();
-
     }
 
     public void UpdateButton()
@@ -110,12 +108,11 @@ public class LobbyController : MonoBehaviour
     {
         CurrentLobbyID = Manager.GetComponent<SteamLobby>().CurrentLobbyID;
         LobbyNameText.text = SteamMatchmaking.GetLobbyData(new CSteamID(CurrentLobbyID), "name");
- 
-
     }
 
     public void UpdatePlayerList()
     {
+        Debug.Log("LobbyController.UpdatePlayerList() called");
         if (!PlayerItemCreated)
         {
             CreateHostPlayerItem();
@@ -124,7 +121,6 @@ public class LobbyController : MonoBehaviour
         if(PlayerListItems.Count < Manager.GamePlayers.Count) { CreateClientPlayerItem(); }
         if(PlayerListItems.Count > Manager.GamePlayers.Count) { RemovePlayerItem(); }
         if (PlayerListItems.Count == Manager.GamePlayers.Count) { UpdatePlayerItem(); }
-
     }
 
     public void FindLocalPlayer()
@@ -230,6 +226,7 @@ public class LobbyController : MonoBehaviour
 
     public void StartGame(string SceneName)
     {
+        Debug.Log("LobbyController.Startgame() called");
         LocalplayerController.CanStartGame(SceneName);
     }
 }
