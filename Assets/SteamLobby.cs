@@ -21,9 +21,7 @@ public class SteamLobby : MonoBehaviour
     private LobbyController lobbyController;
 
     // GameObject
-
     public GameObject MainGameScreen;
-
     public Text SplashScreenText;
 
     private void Start() {
