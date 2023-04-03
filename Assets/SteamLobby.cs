@@ -66,8 +66,8 @@ public class SteamLobby : MonoBehaviour
     private void OnLobbyEntered(LobbyEnter_t callback) {
         Debug.Log("SteamLobby.OnLobbyEntered() called");
         // Everyone
-        // CurrentLobbyID = callback.m_ulSteamIDLobby;
-   
+        CurrentLobbyID = callback.m_ulSteamIDLobby;
+
         // Client
         if (NetworkServer.active) { return; }
         manager.networkAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
