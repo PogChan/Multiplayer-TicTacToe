@@ -12,6 +12,7 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
+        Debug.Log("CustomNetworkManager.OnServerAddPlayer() called");
         if(SceneManager.GetActiveScene().name == "Lobby")
         {
             PlayerObjectController GamePlayerInstance = Instantiate(GamePlayerPrefab);

@@ -74,8 +74,6 @@ public class PlayerObjectController : NetworkBehaviour
         LobbyController.Instance.UpdateLobbyName();
     }
 
-
-
     public override void OnStartClient()
     {
         Debug.Log("PlayerObjectControlled.OnStartClient() called");
