@@ -15,17 +15,22 @@ public class Space : NetworkBehaviour
         gameController = control;
     }
 
-    public void SetSpace()
-    {
-        buttonText.text = gameController.GetSide();
-        button.interactable = false;
-        gameController.EndTurn();
-    }
-
+   
+    //gameController.EndTurn();
     [Command]
     public void CmdOnCellClick()
     {
         Debug.Log("Just clicked on Cell " + button.name);
         SetSpace();
+
+        gameController.EndTurn();
+    }
+
+    [TargetRpc]
+    public void SetSpace()
+    {
+
+        buttonText.text = gameController.GetSide();
+        button.interactable = false;
     }
 }
