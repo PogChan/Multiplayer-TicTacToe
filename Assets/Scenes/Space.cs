@@ -9,6 +9,9 @@ public class Space : NetworkBehaviour
     public Text buttonText;
     private GameController gameController;
 
+    [SyncVar(hook = nameof(SetSpace))] private string buttText;
+
+
     public void SetControllerReference(GameController control)
     {
         gameController = control;
@@ -19,13 +22,14 @@ public class Space : NetworkBehaviour
     public void CmdOnCellClick()
     {
         Debug.Log("Just clicked on Cell " + button.name);
-        this.SetSpace();
-
+       
+        buttText = gameController.GetSide();
         gameController.EndTurn();
     }
-    public void SetSpace()
+    public void SetSpace(string oldValue, string newValue)
     {
-        buttonText.text = gameController.GetSide();
+        buttText = newValue;
+        buttonText.text = newValue;
         button.interactable = false;
     }
 }
