@@ -6,8 +6,8 @@ using Mirror;
 
 public class Space : NetworkBehaviour
 {
-    public Button button;
-    public Text buttonText;
+    [SyncVar(hook = nameof(SetSpace))] public Button button;
+    [SyncVar(hook = nameof(SetSpace))] public Text buttonText;
     private GameController gameController;
 
     public void SetControllerReference(GameController control)
@@ -21,15 +21,12 @@ public class Space : NetworkBehaviour
     public void CmdOnCellClick()
     {
         Debug.Log("Just clicked on Cell " + button.name);
-        SetSpace();
+        this.SetSpace();
 
         gameController.EndTurn();
     }
-
-    [TargetRpc]
     public void SetSpace()
     {
-
         buttonText.text = gameController.GetSide();
         button.interactable = false;
     }
