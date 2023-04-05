@@ -24,6 +24,15 @@ public class CustomNetworkManager : NetworkManager
         }
     }
 
+    public override void OnClientConnect()
+    {
+        Debug.Log("CustomNetworkManager.OnClientConnect() called");
+        base.OnClientConnect();
+
+        LobbyController.Instance.UpdatePlayerList();
+        LobbyController.Instance.UpdateLobbyName();
+    }
+
     public void StartGame(string SceneName)
     {
         ServerChangeScene(SceneName);
