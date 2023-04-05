@@ -59,6 +59,7 @@ public class PlayerObjectController : NetworkBehaviour
     {
         if (isOwned)
         {
+            Debug.Log("reading change....");
             CMDSetPlayerReady();
         }
     }
@@ -110,8 +111,10 @@ public class PlayerObjectController : NetworkBehaviour
     //host calls this function and then calls the command to call
     public void CanStartGame(string SceneName)
     {
+        Debug.Log("isOwned" + isOwned);
         if (isOwned)
         {
+            Debug.Log("starting game");
             CMDCanStartGame(SceneName);
         }
     }
