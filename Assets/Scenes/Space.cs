@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class Space : MonoBehaviour
+public class Space : NetworkBehaviour
 {
     public Button button;
     public Text buttonText;
@@ -19,5 +20,12 @@ public class Space : MonoBehaviour
         buttonText.text = gameController.GetSide();
         button.interactable = false;
         gameController.EndTurn();
+    }
+
+    [Command]
+    public void CmdOnCellClick()
+    {
+        Debug.Log("Just clicked on Cell " + button.name);
+        SetSpace();
     }
 }

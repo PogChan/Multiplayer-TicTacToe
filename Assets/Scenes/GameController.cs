@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class GameController : MonoBehaviour
+
+public class GameController : NetworkBehaviour
 {
     public Text[] spaceList;
     public GameObject gameOverPanel;
@@ -100,4 +102,7 @@ public class GameController : MonoBehaviour
             for (int i = 0; i < spaceList.Length; i++)
                 spaceList[i].text = "";
     }
+
+ 
+
 }
