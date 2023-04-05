@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Mirror;
 
 
-public class GameController : NetworkBehaviour
+public class GameController : MonoBehaviour
 {
     public Text[] spaceList;
     public GameObject gameOverPanel;
